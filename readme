@@ -1,0 +1,79 @@
+This is a practice to how dockerize and compose two react apps,on different ports, what I did? inside each app root folder I created a dockerfile to manage the app, using nodejs:18 a workdir called app , I copy the package.json and install all the packages using run command expose the port and after run on CMD npm start
+
+App 1 : Gigaland-grey : is running on 3000 port
+
+By defualt react js apps run on this port so I didn't move it
+I just expose the port 3000
+
+FROM node:18
+
+# directorio de trabajo
+WORKDIR /app
+
+# Copiar los archivos de package.json y package-lock.json
+COPY package*.json ./
+
+# Instalar las dependencias
+RUN npm install --force
+
+# Copiar el resto del código de la aplicación
+COPY . .
+
+# Exponer el puerto en el que se ejecuta la aplicación React.js
+EXPOSE 3000
+
+# Comando para iniciar la aplicación
+CMD ["npm", "start"]
+
+App 2: Gigaland-retro : is running on 3001 port
+By defualt react js apps run on the port 3000 so I change on my package.json
+inside the command start what is the port I wanna use, I selected 3001
+
+![alt text](image.png)
+
+And inside the Dockerfile I exposed the selected port 3001
+
+FROM node:18
+
+# directorio de trabajo
+WORKDIR /app
+
+# Copiar los archivos de package.json y package-lock.json
+COPY package*.json ./
+
+# Instalar las dependencias
+RUN npm install --force
+
+# Copiar el resto del código de la aplicación
+COPY . .
+
+# Exponer el puerto en el que se ejecuta la aplicación React.js
+EXPOSE 3001
+
+# Comando para iniciar la aplicación
+CMD ["npm", "start"]
+
+To use this docker image you can just clone this repo and run in the root folder
+
+docker-compose up --build 
+
+wait a few and you will see in the terminal something like this, because is building the apps
+
+![alt text](image-1.png)
+
+After the compile you will be able to see each app using this urls on your local machine
+
+App 1:
+http://localhost:3000
+
+![alt text](image-2.png)
+
+App 2:
+http://localhost:3001
+
+![alt text](image-3.png)
+
+
+                                                                                       
+
+
