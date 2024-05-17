@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  react-app-1:
+    build: 
+      context: ./Gigaland-grey
+      dockerfile: Dockerfile
+    image: gigaland_grey
+    container_name: gigaland_grey
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./Gigaland-grey:/app  # Monta el directorio Gigaland-grey en /app dentro del contenedor
+
+  react-app-2:
+    build: 
+      context: ./Gigaland-retro
+      dockerfile: Dockerfile
+    image: gigaland_retro
+    container_name: gigaland_retro
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./Gigaland-retro:/app  # Monta el directorio Gigaland-retro en /app dentro del contenedor
